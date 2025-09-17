@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Ошибка</title>
+  <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+</head>
+<body class="container mt-5">
+<div class="alert alert-danger" role="alert">
+  <h4 class="alert-heading">Ошибка</h4>
+  <p th:text="${errorMessage}"></p>
+  <a th:href="@{/v1/users}" class="btn btn-primary mt-3">На главную</a>
+</div>
+</body>
+</html>

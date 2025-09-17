@@ -10,7 +10,7 @@
 <body class="container mt-4">
 <h2 class="mb-3">Пользователи</h2>
 
-<a th:href="@{/users/new}" class="btn btn-primary mb-3">Добавить +</a>
+<a th:href="@{/v1/users/new}" class="btn btn-primary mb-3">Добавить +</a>
 
 <table class="table table-striped table-bordered">
     <thead class="table-dark">
@@ -31,9 +31,10 @@
         <td th:text="${user.age}"></td>
         <td th:text="${user.nickName}"></td>
         <td>
-            <a th:href="@{/users/edit/{id}(id=${user.id})}" class="btn btn-sm btn-warning">Редактировать</a>
-            <a th:href="@{/users/delete/{id}(id=${user.id})}" class="btn btn-sm btn-danger"
-               onclick="return confirm('Delete this user?')">Удалить</a>
+            <a th:href="@{/v1/users/{id}(id=${user.id})}" class="btn btn-sm btn-warning">Редактировать</a>
+            <form th:action="@{/v1/users/{id}/delete(id=${user.id})}" method="post" style="display:inline;">
+                <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
+            </form>
         </td>
     </tr>
     </tbody>

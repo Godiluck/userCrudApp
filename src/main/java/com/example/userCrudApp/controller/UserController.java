@@ -1,6 +1,7 @@
 package com.example.userCrudApp.controller;
 
-import com.example.userCrudApp.model.User;
+import com.example.userCrudApp.dto.CreateUserDto;
+import com.example.userCrudApp.dto.UpdateUserDto;
 import com.example.userCrudApp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/users")
+@RequestMapping("/v1/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -27,38 +28,43 @@ public class UserController {
 
     @GetMapping("/new")
     public String createUserForm(Model model) {
-        model.addAttribute("user", new User());
+        model.addAttribute("user", new CreateUserDto());
+        model.addAttribute("isNew", true);
         return "form";
     }
 
     @PostMapping
-    public String saveUser(@ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String saveUser(@ModelAttribute("user") @Valid CreateUserDto dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("isNew", true);
             return "form";
         }
-        userService.save(user);
-        return "redirect:/users";
+        userService.save(dto);
+        return "redirect:/v1/users";
     }
 
-    @GetMapping("/edit/{id}")
+    @GetMapping("/{id}")
     public String editUserForm(@PathVariable Long id, Model model) {
-        model.addAttribute("user", userService.findById(id));
+        model.addAttribute("user", userService.findUpdateDtoById(id));
+        model.addAttribute("isNew", false);
+        model.addAttribute("userId", id);
         return "form";
     }
 
     @PostMapping("/{id}")
-    public String updateUser(@PathVariable Long id, @ModelAttribute("user") @Valid User user, BindingResult bindingResult) {
+    public String updateUser(@PathVariable Long id, @ModelAttribute("user") @Valid UpdateUserDto dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("isNew", false);
+            model.addAttribute("userId", id);
             return "form";
         }
-        user.setId(id);
-        userService.save(user);
-        return "redirect:/users";
+        userService.update(id, dto);
+        return "redirect:/v1/users";
     }
 
-    @GetMapping("/delete/{id}")
+    @PostMapping("/{id}/delete")
     public String deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        return "redirect:/users";
+        return "redirect:/v1/users";
     }
 }
