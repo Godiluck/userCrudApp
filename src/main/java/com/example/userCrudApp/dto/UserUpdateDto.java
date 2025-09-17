@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class CreateUserDto {
+public class UserUpdateDto {
     @NotBlank(message = "Имя не может быть пустым")
     private String name;
 

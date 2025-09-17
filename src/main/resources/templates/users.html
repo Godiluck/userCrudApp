@@ -32,7 +32,8 @@
         <td th:text="${user.nickName}"></td>
         <td>
             <a th:href="@{/v1/users/{id}(id=${user.id})}" class="btn btn-sm btn-warning">Редактировать</a>
-            <form th:action="@{/v1/users/{id}/delete(id=${user.id})}" method="post" style="display:inline;">
+            <form th:action="@{'/v1/users/' + ${user.id}}" method="post" style="display:inline;">
+                <input type="hidden" name="_method" value="delete">
                 <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
             </form>
         </td>

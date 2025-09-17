@@ -11,6 +11,7 @@
 <h2 th:text="${isNew} ? 'Создание пользователя' : 'Редактирование пользователя'">Форма</h2>
 
 <form th:action="${isNew} ? '/v1/users' : '/v1/users/' + ${userId}" th:object="${user}" method="post" class="mt-3">
+    <input type="hidden" name="_method" value="put" th:if="${!isNew}"/>
     <div class="mb-3">
         <label for="name" class="form-label">Имя:</label>
         <input type="text" th:field="*{name}" id="name" class="form-control"
