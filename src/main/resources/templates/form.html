@@ -10,7 +10,8 @@
 <body class="container mt-4">
 <h2 th:text="${isNew} ? 'Создание пользователя' : 'Редактирование пользователя'">Форма</h2>
 
-<form th:action="${isNew} ? '/v1/users' : '/v1/users/' + ${userId}" th:object="${user}" method="post" class="mt-3">
+<form th:action="${isNew} ? '/v2/admin/users' : '/v2/admin/users/' + ${userId}" th:object="${user}" method="post"
+      class="mt-3">
     <input type="hidden" name="_method" value="put" th:if="${!isNew}"/>
     <div class="mb-3">
         <label for="name" class="form-label">Имя:</label>
@@ -31,15 +32,30 @@
         <div th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
     </div>
     <div class="mb-3">
-        <label for="nickname" class="form-label">Никнейм:</label>
-        <input type="text" th:field="*{nickName}" id="nickname" class="form-control"
-               th:classappend="${#fields.hasErrors('nickName')} ? 'is-invalid' : ''"/>
-        <div th:if="${#fields.hasErrors('nickName')}" th:errors="*{nickName}"></div>
+        <label for="username" class="form-label">Username:</label>
+        <input type="text" th:field="*{username}" id="username" class="form-control"
+               th:classappend="${#fields.hasErrors('username')} ? 'is-invalid' : ''"/>
+        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></div>
+    </div>
+    <div class="mb-3" th:if="${isNew}">
+        <label for="password" class="form-label">Пароль:</label>
+        <input type="password" th:field="*{password}" id="password" class="form-control"
+               th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"/>
+        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+    </div>
+    <div class="mb-3">
+        <label for="roles" class="form-label">Роли</label><br>
+        <div th:each="role : ${allRoles}">
+            <div th:if="${role.role == 'ROLE_ADMIN'}">
+                <input id="roles" type="checkbox" th:field="*{roleIds}" th:value="${role.id}"/>
+                <span th:text="${role.role}"></span><br/>
+            </div>
+        </div>
     </div>
     <button type="submit" class="btn" th:classappend="${isNew} ? 'btn-success' : 'btn-warning'"
             th:text="${isNew} ? 'Сохранить' : 'Обновить'">Сохранить
     </button>
-    <a th:href="@{/v1/users}" class="btn btn-secondary">Назад</a>
+    <a th:href="@{/v2/admin/users}" class="btn btn-secondary">Назад</a>
 </form>
 </body>
 </html>

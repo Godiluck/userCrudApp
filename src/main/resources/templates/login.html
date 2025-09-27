@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+    <script th:src="@{/webjars/jquery/3.7.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/5.3.3/js/bootstrap.bundle.min.js}"></script>
+</head>
+<body class="container mt-4 d-flex flex-column gap-3 justify-content-center w-50">
+
+<h2 class="mb-4">Вход</h2>
+
+<div th:if="${errorMessage}" class="alert alert-danger" th:text="${errorMessage}"></div>
+
+<form th:action="@{/v2/login}" method="post" class="d-flex flex-column gap-3">
+    <div class="mb-3">
+        <label for="username" class="form-label">Username:</label>
+        <input type="text" name="username" id="username" class="form-control"/>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label">Пароль:</label>
+        <input type="password" name="password" id="password" class="form-control"/>
+    </div>
+    <button type="submit" class="btn btn-success">Войти</button>
+</form>
+
+<a th:href="@{/v2/register}" class="btn btn-primary mb-3">Регистрация</a>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Личный кабинет</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.3.3/css/bootstrap.min.css}"/>
+</head>
+<body class="container mt-4">
+
+<h2 class="mb-4">Добро пожаловать, <span th:text="${user.username}"></span>!</h2>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Имя:</strong> <span th:text="${user.name}"></span></li>
+            <li class="list-group-item"><strong>Email:</strong> <span th:text="${user.email}"></span></li>
+            <li class="list-group-item"><strong>Возраст:</strong> <span th:text="${user.age}"></span></li>
+        </ul>
+    </div>
+</div>
+
+<a th:href="@{/logout}" class="btn btn-danger mt-3">Выйти</a>
+<a th:if="${isAdmin}" th:href="@{/v2/admin/users}" class="btn btn-primary mt-3">
+    К списку пользователей
+</a>
+
+</body>
+</html>

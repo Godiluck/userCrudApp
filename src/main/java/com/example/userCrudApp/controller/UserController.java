@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/v1/users")
+@RequestMapping("/v2/admin/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -32,6 +32,7 @@ public class UserController {
     public String createUserForm(Model model) {
         model.addAttribute("user", new UserCreateDto());
         model.addAttribute("isNew", true);
+        model.addAttribute("allRoles", userService.findAllRoles());
         return "form";
     }
 
@@ -42,7 +43,7 @@ public class UserController {
             return "form";
         }
         userService.save(dto);
-        return "redirect:/v1/users";
+        return "redirect:/v2/admin/users";
     }
 
     @GetMapping("/{id}")
@@ -50,6 +51,7 @@ public class UserController {
         model.addAttribute("user", userService.findUpdateDtoById(id));
         model.addAttribute("isNew", false);
         model.addAttribute("userId", id);
+        model.addAttribute("allRoles", userService.findAllRoles());
         return "form";
     }
 
@@ -58,15 +60,16 @@ public class UserController {
         if (bindingResult.hasErrors()) {
             model.addAttribute("isNew", false);
             model.addAttribute("userId", id);
+            model.addAttribute("allRoles", userService.findAllRoles());
             return "form";
         }
         userService.update(id, dto);
-        return "redirect:/v1/users";
+        return "redirect:/v2/admin/users";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        return "redirect:/v1/users";
+        return "redirect:/v2/admin/users";
     }
 }
