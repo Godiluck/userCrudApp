@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthController {
     private final AuthService authService;
 
-    @GetMapping("/v2/login")
+    @GetMapping("/v1/login")
     public String login(@RequestParam(value = "error", required = false) String error, Model model) {
         if (error != null) {
             model.addAttribute("errorMessage", "Неверный логин или пароль");
@@ -25,13 +25,13 @@ public class AuthController {
         return "login";
     }
 
-    @GetMapping("/v2/register")
+    @GetMapping("/v1/register")
     public String showRegistrationForm(Model model) {
         model.addAttribute("user", new UserCreateDto());
         return "register";
     }
 
-    @PostMapping("/v2/register")
+    @PostMapping("/v1/register")
     public String registerUser(@ModelAttribute("user") @Valid UserCreateDto dto, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
             return "register";

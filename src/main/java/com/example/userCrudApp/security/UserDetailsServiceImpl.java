@@ -1,5 +1,6 @@
-package com.example.userCrudApp.service;
+package com.example.userCrudApp.security;
 
+import com.example.userCrudApp.model.User;
 import com.example.userCrudApp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,7 +15,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userRepository.findByUsername(username)
+        User user =  userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Пользователь с username " + username + " не найден"));
+
+        return new UserPrincipal(user);
     }
 }

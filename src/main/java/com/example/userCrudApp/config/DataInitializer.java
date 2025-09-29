@@ -5,15 +5,9 @@ import com.example.userCrudApp.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Configuration
-public class JavaConfig {
-
-    @Bean
-    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-        return new HiddenHttpMethodFilter();
-    }
+public class DataInitializer {
 
     @Bean
     public CommandLineRunner initRolesAndAdmin(UserService userService) {
@@ -22,7 +16,14 @@ public class JavaConfig {
             userService.createRoleIfNotExist("ROLE_USER");
 
             if (!userService.isUsernameExist("admin")) {
-                userService.createAdmin(new UserCreateDto("Admin", "admin@admin.com", 30, "admin", "admin"));
+                userService.createAdmin(UserCreateDto.builder()
+                        .name("admin")
+                        .email("admin@admin.com")
+                        .age(30)
+                        .username("admin")
+                        .password("admin")
+                        .build()
+                );
             }
         };
     }

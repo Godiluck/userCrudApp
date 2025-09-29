@@ -13,7 +13,7 @@
     <span th:text="${error}"></span>
 </div>
 
-<form th:action="@{/v2/register}" th:object="${user}" method="post" class="d-flex flex-column gap-3">
+<form th:action="@{/v1/register}" th:object="${user}" method="post" class="d-flex flex-column gap-3">
     <div class="mb-3">
         <label for="name">Имя</label>
         <input type="text" id="name" th:field="*{name}" class="form-control"/>

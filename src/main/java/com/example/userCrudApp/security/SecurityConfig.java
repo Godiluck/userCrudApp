@@ -1,4 +1,4 @@
-package com.example.userCrudApp.config;
+package com.example.userCrudApp.security;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,14 +25,14 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/webjars/**", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/v2/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/v2/user/**").hasAnyRole("USER", "ADMIN")
-                        .requestMatchers("/", "/v2/login", "/v2/register").permitAll()
+                        .requestMatchers("/v1/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/v1/user/**").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers("/", "/v1/login", "/v1/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .loginPage("/v2/login")
-                        .failureUrl("/v2/login?error=true")
+                        .loginPage("/v1/login")
+                        .failureUrl("/v1/login?error=true")
                         .successHandler(successUserHandler)
                         .permitAll()
                 )

@@ -10,7 +10,7 @@
 <body class="container mt-4">
 <h2 class="mb-3">Пользователи</h2>
 
-<a th:href="@{/v2/admin/users/new}" class="btn btn-primary mb-3">Добавить +</a>
+<a th:href="@{/v1/admin/users/new}" class="btn btn-primary mb-3">Добавить +</a>
 
 <table class="table table-striped table-bordered">
     <thead class="table-dark">
@@ -31,8 +31,8 @@
         <td th:text="${user.age}"></td>
         <td th:text="${user.username}"></td>
         <td>
-            <a th:href="@{/v2/admin/users/{id}(id=${user.id})}" class="btn btn-sm btn-warning">Редактировать</a>
-            <form th:action="@{'/v2/admin/users/' + ${user.id}}" method="post" style="display:inline;">
+            <a th:href="@{/v1/admin/users/{id}(id=${user.id})}" class="btn btn-sm btn-warning">Редактировать</a>
+            <form th:action="@{'/v1/admin/users/' + ${user.id}}" method="post" style="display:inline;">
                 <input type="hidden" name="_method" value="delete">
                 <button type="submit" class="btn btn-sm btn-danger">Удалить</button>
             </form>
@@ -41,6 +41,6 @@
     </tbody>
 </table>
 <a th:href="@{/logout}" class="btn btn-danger mt-3">Выйти</a>
-<a th:href="@{/v2/user}" class="btn btn-primary mt-3">Личный кабинет</a>
+<a th:href="@{/v1/user}" class="btn btn-primary mt-3">Личный кабинет</a>
 </body>
 </html>

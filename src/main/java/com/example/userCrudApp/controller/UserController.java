@@ -1,7 +1,7 @@
 package com.example.userCrudApp.controller;
 
 import com.example.userCrudApp.dto.UserCreateDto;
-import com.example.userCrudApp.dto.UserUpdateDto;
+import com.example.userCrudApp.dto.UserUpdateRequestDto;
 import com.example.userCrudApp.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/v2/admin/users")
+@RequestMapping("/v1/admin/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
@@ -37,13 +37,17 @@ public class UserController {
     }
 
     @PostMapping
-    public String saveUser(@ModelAttribute("user") @Valid UserCreateDto dto, BindingResult bindingResult, Model model) {
+    public String saveUser(
+            @ModelAttribute("user") @Valid UserCreateDto dto,
+            BindingResult bindingResult,
+            Model model
+    ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("isNew", true);
             return "form";
         }
         userService.save(dto);
-        return "redirect:/v2/admin/users";
+        return "redirect:/v1/admin/users";
     }
 
     @GetMapping("/{id}")
@@ -56,7 +60,12 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public String updateUser(@PathVariable Long id, @ModelAttribute("user") @Valid UserUpdateDto dto, BindingResult bindingResult, Model model) {
+    public String updateUser(
+            @PathVariable Long id,
+            @ModelAttribute("user") @Valid UserUpdateRequestDto dto,
+            BindingResult bindingResult,
+            Model model
+    ) {
         if (bindingResult.hasErrors()) {
             model.addAttribute("isNew", false);
             model.addAttribute("userId", id);
@@ -64,12 +73,12 @@ public class UserController {
             return "form";
         }
         userService.update(id, dto);
-        return "redirect:/v2/admin/users";
+        return "redirect:/v1/admin/users";
     }
 
     @DeleteMapping("/{id}")
     public String deleteUser(@PathVariable Long id) {
         userService.delete(id);
-        return "redirect:/v2/admin/users";
+        return "redirect:/v1/admin/users";
     }
 }

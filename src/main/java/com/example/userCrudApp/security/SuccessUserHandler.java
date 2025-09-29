@@ -1,4 +1,4 @@
-package com.example.userCrudApp.config;
+package com.example.userCrudApp.security;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -16,9 +16,9 @@ public class SuccessUserHandler implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException {
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if (roles.contains("ROLE_ADMIN")) {
-            httpServletResponse.sendRedirect("/v2/admin/users");
+            httpServletResponse.sendRedirect("/v1/admin/users");
         } else {
-            httpServletResponse.sendRedirect("/v2/user");
+            httpServletResponse.sendRedirect("/v1/user");
         }
     }
 }

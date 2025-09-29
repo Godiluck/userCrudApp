@@ -10,7 +10,7 @@
 <body class="container mt-4">
 <h2 th:text="${isNew} ? 'Создание пользователя' : 'Редактирование пользователя'">Форма</h2>
 
-<form th:action="${isNew} ? '/v2/admin/users' : '/v2/admin/users/' + ${userId}" th:object="${user}" method="post"
+<form th:action="${isNew} ? '/v1/admin/users' : '/v1/admin/users/' + ${userId}" th:object="${user}" method="post"
       class="mt-3">
     <input type="hidden" name="_method" value="put" th:if="${!isNew}"/>
     <div class="mb-3">
@@ -55,7 +55,7 @@
     <button type="submit" class="btn" th:classappend="${isNew} ? 'btn-success' : 'btn-warning'"
             th:text="${isNew} ? 'Сохранить' : 'Обновить'">Сохранить
     </button>
-    <a th:href="@{/v2/admin/users}" class="btn btn-secondary">Назад</a>
+    <a th:href="@{/v1/admin/users}" class="btn btn-secondary">Назад</a>
 </form>
 </body>
 </html>
